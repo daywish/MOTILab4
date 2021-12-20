@@ -1,0 +1,36 @@
+﻿@model MOTILab4.Models.ElectorChoise
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ElectorChoise</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Elector)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Elector.ElectorId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VotingObject)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VotingObject.VotingObjectId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ElectorChoiseId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,71 @@
+﻿@using System.Collections
+@using Newtonsoft.Json
+
+@model MOTILab4.VIewModels.ChoiseCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    ViewData["ElectorId"] = new SelectList(Model.Electors, "ElectorId", "ElectorName");
+    ViewData["VotingObjectId"] = new SelectList(Model.VotingObjects, "VotingObjectId", "VotingObjectName");
+    int Order = 1;
+}
+<h1>Create</h1>
+
+<h4>ElectorChoise</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAllChoises">
+            <div class="form-group">
+                <label class="control-label">Choose elector:</label>
+                <select id="ElectorId" asp-items="ViewBag.ElectorId" onchange="changeEl()">
+                    <option value="0" selected>Choose elector</option>
+                </select>
+            </div>
+            @foreach (var item in Model.VotingObjects)
+            {
+                <div class="form-group">
+                    <label class="control-label">@Order place</label>
+                    <select id="@Order+order" class="form-control" asp-items="ViewBag.VotingObjectId" onchange="changeArr(@Order)">
+                        <option value="0" selected>Choose option</option>
+                    </select>
+                </div>
+                Order++;
+            }
+            <div class="form-group">
+                <input type="hidden" id="selectionString" name="selectionString" value="" />
+                <input type="button" value="Validate" class="btn btn-primary" onclick="validateStr()" />
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    var resArr = [];
+    var resEl = [];
+    function changeEl() {
+        var select = document.getElementById("ElectorId");
+        resEl[0] = select.value;
+        console.log(resEl[0]);
+    }
+    function changeArr(ind) {
+        var select = document.getElementById(ind + "+order");
+        resArr[ind - 1] = select.value;
+        console.log(resArr[ind - 1]);
+    }
+    function validateStr() {
+        var str = "";
+        str += resEl[0] + "/";
+        for (var i = 0; i < resArr.length; i++) {
+            str += resArr[i] + "|";
+        }
+        console.log(str);
+        var res = document.getElementById("selectionString");
+        res.value = str;
+    }
+</script>

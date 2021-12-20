@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MOTILab4.Models.VotingObject>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VotingObjectName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VotingObjectName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VotingObjectId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VotingObjectId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VotingObjectId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

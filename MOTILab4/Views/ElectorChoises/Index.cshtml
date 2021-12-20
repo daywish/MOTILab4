@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MOTILab4.Models.ElectorChoise>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<p>
+    <a asp-action="CreateAllChoises">Create choises</a>
+</p>
+<p>
+    <a asp-action="DeleteAll">Delete All Choises!</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Elector)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VotingObject)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Elector.ElectorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VotingObject.VotingObjectName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ElectorChoiseId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ElectorChoiseId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ElectorChoiseId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

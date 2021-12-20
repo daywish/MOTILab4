@@ -1,0 +1,59 @@
+﻿@using System.Collections
+@using Newtonsoft.Json
+
+@model MOTILab4.VIewModels.AlternativeVoicesViewModel
+
+@{
+    ViewData["Title"] = "Voices";
+    int order = 1;
+}
+
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th scope="col" rowspan="2">Order</th>
+            <th scope="col" colspan="@Model.Electors.Count()" style="width: 100%; text-align: center">Electors</th>
+        </tr>
+        <tr>
+            @foreach (var elector in Model.Electors)
+            {
+                <th scope="col" style="text-align: center">@elector.ElectorName (@elector.ElectorRatio)</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 1; i <= Model.VotingObjects.Count(); i++)
+        {
+            <tr>
+                <th scope="row">@i</th>
+                @foreach (var elector in Model.Electors)
+                {
+                    ElectorChoise choise = Model.ElectorChoises.Where(e => e.ElectorId == elector.ElectorId && e.Order == i).FirstOrDefault();
+                    <td scope="row" name="@choise.VotingObjectId">@choise.VotingObject.VotingObjectName</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<input type="text" class="step" value="0" hidden="true" />
+<div style="margin-top:20px; text-align:center;">
+    <input class="btn btn-primary" id="btn" type="button" value="Next Step" onclick="btnClick()" />
+</div>
+
+<script>
+    function btnClick() {
+        var jsonString = '@Html.Raw(JsonConvert.SerializeObject(Model.EliminationList))';
+        var stepsList = JSON.parse(jsonString);
+        var step = parseInt(document.querySelector('.step').value, 10);
+        step = isNaN(step) ? 0 : step;
+
+        var cells = document.getElementsByName(stepsList[step]);
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].innerHTML = "";
+        }
+
+        step++;
+        document.querySelector('.step').value = step;
+    }
+</script>
